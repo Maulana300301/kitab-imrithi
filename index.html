@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <script>
+      (function() {
+          const savedTheme = localStorage.getItem('theme');
+          if (savedTheme === 'dark') {
+              document.documentElement.classList.add('dark-mode');
+              // Tambahkan juga ke body agar class-nya siap saat body dimuat
+              document.addEventListener('DOMContentLoaded', () => {
+                  document.body.classList.add('dark-mode');
+              });
+          }
+      })();
+  </script>
+    <title>Imrithi Digital - Home</title>
+    <link rel="stylesheet" href="assets/css/bootstrap@5.2.0.min.css">
+    
+    <style>
+        /* --- [PENTING] LOAD FONT OFFLINE --- */
+        @font-face {
+            font-family: 'Amiri';
+            src: url('assets/fonts/Amiri-Regular.ttf');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Amiri';
+            src: url('assets/fonts/Amiri-Bold.ttf');
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        :root {
+            /* Palette Premium */
+            --primary-bg: #0f3d2e;     /* Hijau NU Gelap Deep */
+            --primary-light: #155d45;  /* Hijau Sedikit Terang */
+            --gold: #d4af37;           /* Emas Mewah */
+            --gold-glow: rgba(212, 175, 55, 0.3);
+            --text-light: #f8f9fa;
+        }
+
+        body { 
+            background: linear-gradient(160deg, var(--primary-bg) 0%, #08281e 100%);
+            font-family: 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        /* 1. HERO SECTION (Ikon & Judul) */
+        .hero-section {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-top: 40px;
+        }
+
+        /* Lingkaran Ikon */
+        .hero-icon-wrapper {
+            width: 110px; height: 110px;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            box-shadow: 0 0 25px var(--gold-glow);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(5px);
+            animation: floatIcon 3s ease-in-out infinite;
+        }
+        
+        @keyframes floatIcon {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* FONT ARAB UTAMA (OFFLINE) */
+        .app-title-arab {
+            font-family: 'Amiri', serif !important; /* Paksa pakai font lokal */
+            font-size: 2.8rem;
+            color: var(--gold);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 5px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        
+        .app-subtitle {
+            font-size: 0.9rem;
+            color: rgba(255,255,255, 0.7);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 500;
+            margin-bottom: 40px;
+        }
+
+        /* 2. MENU GRID */
+        .menu-container {
+            width: 100%;
+            max-width: 360px;
+            padding: 0 20px;
+            margin-bottom: 40px;
+        }
+
+        .btn-menu {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 110px;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* STYLE: PRIMARY (Mulai Baca) */
+        .btn-primary-menu {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(255, 255, 255, 0.05));
+            border: 1.5px solid var(--gold);
+            color: var(--gold);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        .btn-primary-menu:active { transform: scale(0.96); background: rgba(212, 175, 55, 0.2); }
+
+        /* STYLE: SECONDARY */
+        .btn-secondary-menu {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .btn-secondary-menu:active { transform: scale(0.96); background: rgba(255, 255, 255, 0.1); }
+
+        .menu-icon { margin-bottom: 10px; }
+        .menu-label { font-size: 0.85rem; font-weight: 600; letter-spacing: 0.5px; }
+
+        /* 3. FOOTER */
+        .app-footer {
+            text-align: center;
+            padding-bottom: 25px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="hero-section">
+        <div class="hero-icon-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                <path d="M12 6h4"></path> </svg>
+        </div>
+
+        <div class="app-title-arab">الْعِمْرِيْطِي</div>
+        <div class="app-subtitle">Nadhom Imrithi Digital</div>
+
+        <div class="menu-container">
+            <div class="row g-3">
+                
+                <div class="col-6">
+                    <a href="daftar_isi.html" class="btn-menu btn-primary-menu">
+                        <div class="menu-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                        </div>
+                        <span class="menu-label">Mulai Baca</span>
+                    </a>
+                </div>
+
+                <div class="col-6">
+                    <a href="audio_full.html" class="btn-menu btn-secondary-menu">
+                        <div class="menu-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ffc107" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
+                        </div>
+                        <span class="menu-label">Dengarkan</span>
+                    </a>
+                </div>
+
+                <div class="col-6">
+                    <a href="favorit.html" class="btn-menu btn-secondary-menu">
+                        <div class="menu-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                        </div>
+                        <span class="menu-label">Bookmark</span>
+                    </a>
+                </div>
+
+                <div class="col-6">
+                    <a href="tentang.html" class="btn-menu btn-secondary-menu">
+                        <div class="menu-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        </div>
+                        <span class="menu-label">Tentang</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="app-footer">
+        Versi 1.0 • Santri Developer
+    </div>
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+           document.body.style.opacity = 0;
+           setTimeout(() => {
+               document.body.style.transition = 'opacity 0.8s ease';
+               document.body.style.opacity = 1;
+           }, 100);
+        });
+    </script>
+
+</body>
+</html>
