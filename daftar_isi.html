@@ -18,23 +18,14 @@
     <link rel="stylesheet" href="assets/css/style.css">
     
     <style>
-        html.dark-mode { background-color: #121212 !important; }
-        html.dark-mode body { background-color: #121212 !important; opacity: 0; }
-        
-        @font-face {
-            font-family: 'Amiri';
-            src: url('assets/fonts/Amiri-Regular.ttf');
-            font-weight: normal; font-style: normal;
-        }
-        @font-face {
-            font-family: 'Amiri';
-            src: url('assets/fonts/Amiri-Bold.ttf');
-            font-weight: 700; font-style: normal;
-        }
-
+        /* --- TEMA WARNA (SINKRON DENGAN HOME) --- */
         :root {
-            --primary: #198754; --primary-dark: #146c43; --gold: #d4af37;
-            --gold-light: #f9f1d8; --bg-light: #f8f9fa; --text-dark: #2c3e50;
+            --primary: #0f3d2e;        /* Hijau NU Gelap (SAMA DENGAN HOME) */
+            --primary-dark: #08281e;
+            --gold: #d4af37;
+            --gold-light: #f9f1d8;
+            --bg-light: #f8f9fa;
+            --text-dark: #2c3e50;
         }
 
         body { 
@@ -44,30 +35,36 @@
             scroll-behavior: smooth;
         }
 
+        /* HEADER SECTION */
         .app-navbar {
             background-color: var(--primary);
             border-bottom: 2px solid var(--gold) !important;
-            padding-bottom: 55px; border-bottom-left-radius: 30px;
-            border-bottom-right-radius: 30px; box-shadow: 0 4px 20px rgba(25, 135, 84, 0.25);
-            position: relative; z-index: 5;
+            padding-bottom: 55px; 
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px; 
+            box-shadow: 0 4px 20px rgba(15, 61, 46, 0.3);
+            position: relative; 
+            z-index: 5;
         }
-        .theme-toggle { cursor: pointer; color: white; z-index: 10; }
+
+        /* STATISTIK BOX */
         .stats-container { margin-top: -45px; padding: 0 20px; position: relative; z-index: 10; }
         .stats-card {
             background: white; border-radius: 16px; border: none;
             box-shadow: 0 10px 25px rgba(0,0,0,0.08); padding: 25px 20px;
             display: flex; justify-content: space-around; text-align: center;
         }
-        .stat-item h3 { font-size: 1.8rem; font-weight: 800; color: var(--primary-dark); margin: 0; line-height: 1; }
+        .stat-item h3 { font-size: 1.8rem; font-weight: 800; color: var(--primary); margin: 0; line-height: 1; }
         .stat-item span { font-size: 0.65rem; color: #999; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-top: 5px; display: block; }
         .stat-divider { width: 1px; background: linear-gradient(to bottom, transparent, rgba(212, 175, 55, 0.4), transparent); height: 50px; }
         
+        /* LIST ITEM */
         .bab-list { margin-top: 25px; }
         .bab-item {
             display: flex; align-items: center; background: white; border-radius: 14px;
             padding: 18px; margin-bottom: 12px; text-decoration: none; color: var(--text-dark);
             box-shadow: 0 4px 10px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.02);
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); position: relative; overflow: hidden;
+            transition: all 0.3s ease; position: relative; overflow: hidden;
         }
         .bab-item:active { transform: scale(0.98); background-color: #f1f8f5; }
         
@@ -78,21 +75,19 @@
             margin-right: 16px; flex-shrink: 0;
         }
         .bab-info { flex-grow: 1; }
-        .bab-title { font-family: 'Amiri', serif !important; font-weight: 700; font-size: 1.35rem; line-height: 1.2; color: #222; margin-bottom: 4px; }
+        .bab-title { font-family: 'Amiri', serif !important; font-weight: 700; font-size: 1.35rem; color: #222; margin-bottom: 4px; }
         .bab-desc { font-size: 0.8rem; color: #777; font-weight: 500; }
         
-        .bab-special { background: linear-gradient(to right, #fffdf2, #fff); border: 1px solid rgba(212, 175, 55, 0.2); }
         .special-badge { font-size: 0.55rem; background: var(--primary); color: white; padding: 3px 8px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 800; display: inline-block; margin-bottom: 6px; }
-        
-        .bab-last-read { border-left: 4px solid var(--primary) !important; background: #fff; }
+        .bab-last-read { border-left: 4px solid var(--gold) !important; background: #fffdf2; }
 
+        /* DARK MODE SUPPORT */
         body.dark-mode { background-color: #121212; --bg-light: #121212; --text-dark: #ddd; }
-        body.dark-mode .app-navbar { background-color: #0b3327; }
+        body.dark-mode .app-navbar { background-color: var(--primary-dark); }
         body.dark-mode .stats-card, body.dark-mode .bab-item { background-color: #1e1e1e; border-color: #333; }
         body.dark-mode .bab-title { color: #eee; }
         body.dark-mode .bab-desc { color: #888; }
         body.dark-mode .bab-number { background-color: #2a2510; color: var(--gold); }
-        body.dark-mode .bab-special { background: #222015; border-color: #443a1a; }
         body.dark-mode .stat-item h3 { color: #fff; }
     </style>
 </head>
@@ -104,7 +99,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
             </a>
             <span class="text-white fw-bold fs-5">Daftar Isi</span>
-            <div id="theme-btn" class="theme-toggle p-2 position-absolute end-0 me-2"></div>
+            <div id="theme-btn" class="theme-toggle p-2 position-absolute end-0 me-2" style="cursor: pointer; color: white;"></div>
         </div>
     </nav>
 
@@ -133,45 +128,24 @@
     const themeBtn = document.getElementById('theme-btn');
 
     document.addEventListener('DOMContentLoaded', () => {
-        // 1. Matikan transisi agar tidak kedip saat ganti tema di awal
-        document.body.style.transition = 'none';
-        
-        // 2. Cek memori (Sinkronkan HTML dan BODY)
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'dark') {
             document.documentElement.classList.add('dark-mode');
             document.body.classList.add('dark-mode');
-        } else {
-            // Pastikan bersih total jika bukan dark
-            document.documentElement.classList.remove('dark-mode');
-            document.body.classList.remove('dark-mode');
         }
         
-        document.body.style.opacity = '1';
         updateThemeIcon();
         generateSmartList();
-
-        // 3. Hidupkan lagi transisinya setelah jeda singkat
-        setTimeout(() => {
-            document.body.style.transition = 'background-color 0.3s ease, color 0.3s ease, opacity 0.3s ease';
-        }, 100);
     });
 
-    // --- LOGIKA TOMBOL TOGGLE (DIPERBAIKI) ---
     themeBtn.addEventListener('click', () => {
-        // Toggle di kedua elemen agar tidak ada yang ketinggalan
         const isDarkNow = document.documentElement.classList.toggle('dark-mode');
         document.body.classList.toggle('dark-mode', isDarkNow);
-        
-        // Simpan status ke memori
-        const themeToSave = isDarkNow ? 'dark' : 'light';
-        localStorage.setItem('theme', themeToSave);
-        
+        localStorage.setItem('theme', isDarkNow ? 'dark' : 'light');
         updateThemeIcon();
     });
 
     function updateThemeIcon() {
-        // Cek status dari elemen html (karena ini yang paling utama)
         const isDark = document.documentElement.classList.contains('dark-mode');
         themeBtn.innerHTML = isDark 
             ? `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`
@@ -189,17 +163,14 @@
         dataNadhom.forEach((item, index) => {
             let rawHeader = item.header;
             if (!rawHeader && item.id <= 19) rawHeader = "مُقَدِّمَة";
-            let isKhatimah = rawHeader && (rawHeader.includes("الْخَاتِمَة") || rawHeader.includes("خاتمة"));
-
-            if (rawHeader && !isKhatimah && rawHeader !== (currentBab ? currentBab.title : "")) {
+            
+            if (rawHeader && rawHeader !== (currentBab ? currentBab.title : "")) {
                 if (currentBab) babList.push(currentBab);
                 currentBab = { title: rawHeader, start: item.id, end: item.id, count: 1 };
             } else {
                 if (currentBab) { 
                     currentBab.end = item.id; 
                     currentBab.count++; 
-                } else { 
-                    currentBab = { title: "Tanpa Judul", start: item.id, end: item.id, count: 1 }; 
                 }
             }
             if (index === dataNadhom.length - 1 && currentBab) babList.push(currentBab);
@@ -215,28 +186,17 @@
             let nomor = index + 1;
             let isActive = (index === lastReadIndex);
             let isMuqaddimah = (index === 0);
-            let itemClass = isMuqaddimah ? 'bab-special' : '';
-            if(isActive) itemClass += ' bab-last-read';
+            let itemClass = isActive ? 'bab-last-read' : '';
             
             let nomorHtml = `<div class="bab-number">${pad(nomor)}</div>`;
             if(isMuqaddimah) nomorHtml = `<div class="bab-number">۞</div>`;
-            if(isActive) nomorHtml = `<div class="bab-number" style="background:var(--primary); color:white;">📖</div>`;
             
             let subDesc = `Mulai Bait ${bab.start}`;
-            let badgeHtml = "";
-            
-            if (isMuqaddimah) { 
-                subDesc = "Pembukaan Kitab"; 
-                badgeHtml = `<div class="special-badge">Muqoddimah</div>`; 
-            } else if (bab.title.includes("الكلام")) {
-                subDesc = "Definisi Kalam";
-            } else if (bab.title.includes("الإضافة")) {
-                subDesc = "Idhafah & Penutup";
-            }
+            let badgeHtml = isMuqaddimah ? `<div class="special-badge">Muqoddimah</div>` : "";
 
             html += `<a href="baca.html?mulai=${bab.start}&akhir=${bab.end}" onclick="saveLastRead(${index})" class="bab-item ${itemClass}">
                 ${nomorHtml}<div class="bab-info">${badgeHtml}<div class="bab-title">${bab.title}</div><div class="bab-desc">${subDesc} • ${bab.count} Bait</div></div>
-                <svg class="chevron-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg></a>`;
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg></a>`;
         });
         container.innerHTML = html;
     }
