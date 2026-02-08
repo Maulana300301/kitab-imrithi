@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="assets/css/bootstrap@5.2.0.min.css">
     
     <style>
+
         /* --- [PENTING] LOAD FONT OFFLINE --- */
         @font-face {
             font-family: 'Amiri';
@@ -226,6 +227,16 @@
            }, 100);
         });
     </script>
+    
+    <script>
+    (function() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark-mode');
+        }
+    })();
+</script>
+
 
 </body>
 </html>

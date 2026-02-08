@@ -1,5 +1,5 @@
 /* ============================================================
-   DARK MODE HARD-FIX (Taruh Paling Atas)
+   1. DARK MODE HARD-FIX (Prioritas Tertinggi)
    ============================================================ */
 html.dark-mode, 
 body.dark-mode { 
@@ -15,7 +15,9 @@ body.dark-mode {
     --font-latin: 'Poppins', sans-serif;
 }
 
-/* REGISTER FONT LOKAL */
+/* ============================================================
+   2. REGISTER FONT LOKAL
+   ============================================================ */
 @font-face {
     font-family: 'Amiri';
     src: url('../fonts/Amiri-Regular.ttf') format('truetype');
@@ -25,14 +27,14 @@ body.dark-mode {
     src: url('../fonts/Poppins-Regular.ttf') format('truetype');
 }
 
-/* ===========================
-   1. KOMPONEN UMUM & BODY
-   =========================== */
+/* ============================================================
+   3. KOMPONEN UMUM & BODY
+   ============================================================ */
 body {
     font-family: var(--font-latin);
-    background-color: var(--warna-bg); /* Hapus !important di sini */
-    transition: background-color 0.3s ease;
-    padding-bottom: 80px;
+    background-color: var(--warna-bg); 
+    transition: background-color 0.3s ease, color 0.3s ease;
+    padding-bottom: 80px; /* Space untuk player audio */
 }
 
 .app-navbar {
@@ -50,16 +52,16 @@ body {
     font-size: 0.8rem;
 }
 
-/* ===========================
-   2. CARD NADHOM
-   =========================== */
+/* ============================================================
+   4. CARD NADHOM (HALAMAN BACA)
+   ============================================================ */
 .nadhom-card {
     border: none;
     border-radius: 16px;
     background-color: white;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     border-left: 6px solid var(--warna-emas);
-    transition: transform 0.2s;
+    transition: transform 0.2s, background-color 0.3s;
 }
 
 .nadhom-card:active {
@@ -68,7 +70,6 @@ body {
 
 .teks-arab {
     font-family: 'Amiri', serif;
-    font-size: 18px !important;
     line-height: 1.8;
     word-spacing: 1px;
 }
@@ -86,11 +87,29 @@ body {
     font-size: 16px;
 }
 
-/* ===========================
-   3. HALAMAN HOME (MENU)
-   =========================== */
+/* ============================================================
+   5. DAFTAR ISI (SMART LIST)
+   ============================================================ */
+.icon-bab {
+    width: 42px; height: 42px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--warna-utama);
+    font-weight: 700;
+    border: 2px solid var(--warna-emas);
+    transition: all 0.3s ease;
+}
+
+.bab-item {
+    transition: background-color 0.2s;
+}
+
+/* ============================================================
+   6. HALAMAN HOME (MENU UTAMA)
+   ============================================================ */
 .home-bg {
-    background: linear-gradient(135deg, #1B4D3E 0%, #0d2b22 100%) !important;
+    background: linear-gradient(135deg, #1B4D3E 0%, #0d2b22 100%);
     min-height: 100vh;
 }
 
@@ -98,6 +117,7 @@ body {
     font-family: var(--font-arab);
     font-size: 3.5rem;
     color: var(--warna-emas);
+    text-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
 .logo-box {
@@ -106,6 +126,7 @@ body {
     border-radius: 50%;
     display: inline-flex; align-items: center; justify-content: center;
     border: 2px solid var(--warna-emas);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
 }
 
 .menu-card {
@@ -116,11 +137,17 @@ body {
     border: 1px solid rgba(255,255,255,0.1);
     backdrop-filter: blur(5px);
     text-decoration: none;
+    transition: transform 0.2s, background 0.3s;
 }
 
-/* ===========================
-   4. DARK MODE OVERRIDE
-   =========================== */
+.menu-card:active {
+    transform: scale(0.95);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* ============================================================
+   7. DARK MODE OVERRIDE (WAJIB PAKAI !IMPORTANT)
+   ============================================================ */
 body.dark-mode .nadhom-card {
     background-color: #1e1e1e !important;
     color: #fff !important;
@@ -135,13 +162,24 @@ body.dark-mode .icon-bab {
     color: var(--warna-emas) !important;
 }
 
-/* Style Khusus Daftar Isi */
-.icon-bab {
-    width: 42px; height: 42px;
-    background-color: var(--warna-bg);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--warna-utama);
-    font-weight: 700;
-    border: 2px solid var(--warna-emas);
+body.dark-mode .list-group-item {
+    background-color: #1e1e1e !important;
+    border-color: #333 !important;
+    color: #ddd !important;
+}
+
+body.dark-mode .text-muted {
+    color: #a0a0a0 !important;
+}
+
+/* Audio Player Bar (Jika Ada) */
+.audio-player-bar {
+    z-index: 1050;
+    background-color: white;
+    border-top: 2px solid var(--warna-emas);
+}
+
+body.dark-mode .audio-player-bar {
+    background-color: #1e1e1e !important;
+    color: white;
 }
