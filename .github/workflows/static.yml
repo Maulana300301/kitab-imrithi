@@ -1,16 +1,21 @@
-name: Deploy static content to Pages
+# Nama alur kerja (Workflow)
+name: Deploy Imrithi Digital ke Pages
 
 on:
+  # Menjalankan aksi ini setiap kali Sampeyan melakukan 'push' atau upload ke branch main
   push:
-    branches: ["main"] # Pastikan branch utama Sampeyan namanya "main"
+    branches: ["main"]
 
+  # Memungkinkan Sampeyan menjalankan aksi ini secara manual dari tab Actions
   workflow_dispatch:
 
+# Menetapkan izin yang diperlukan untuk GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
+# Memastikan hanya satu proses deploy yang berjalan dalam satu waktu
 concurrency:
   group: "pages"
   cancel-in-progress: true
@@ -22,15 +27,18 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout Kode
         uses: actions/checkout@v4
-      - name: Setup Pages
+
+      - name: Atur GitHub Pages
         uses: actions/configure-pages@v4
-      - name: Upload artifact
+
+      - name: Unggah Artefak Aplikasi
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.' # Mengambil semua file di root folder
-      - name: Deploy to GitHub Pages
+          # Mengambil semua file di folder utama (index.html, assets, dll)
+          path: '.'
+
+      - name: Deploy ke GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        
