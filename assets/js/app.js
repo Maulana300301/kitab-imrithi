@@ -7,6 +7,7 @@ const btnHafalan = document.getElementById('btn-hafalan');
 document.addEventListener('DOMContentLoaded', () => {
     let savedFont = localStorage.getItem('ukuranFont');
     let currentFont = savedFont ? parseInt(savedFont) : 26;
+    if (currentFont < 16) currentFont = 16;
     updateGlobalStyle(currentFont);
 
     let savedTheme = localStorage.getItem('theme');
@@ -16,9 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateTerjemahUI(showTerjemah);
 
     let isHafalan = localStorage.getItem('modeHafalan') === 'true';
-    if (isHafalan) {
-        document.body.classList.add('mode-hafalan-aktif');
-    }
+    if (isHafalan) document.body.classList.add('mode-hafalan-aktif');
     updateIkonHafalan(isHafalan);
 
     tampilkanNadhom();
@@ -29,20 +28,19 @@ document.addEventListener('DOMContentLoaded', () => {
 // --- 2. MENAMPILKAN DATA ---
 function tampilkanNadhom() {
     const params = new URLSearchParams(window.location.search);
-    let mulai = parseInt(params.get('mulai'));
-    let akhir = parseInt(params.get('akhir'));
-
-    if (isNaN(mulai) || isNaN(akhir)) { mulai = 0; akhir = 19; }
+    let mulai = parseInt(params.get('mulai')) || 0;
+    let akhir = parseInt(params.get('akhir')) || 19;
 
     const dataTerpilih = dataNadhom.filter(item => item.id >= mulai && item.id <= akhir);
 
-    // LOGIKA JUDUL
     let titleText = "Imrithi";
     if (mulai <= 1) titleText = "مُقَدِّمَة";
     else if (dataTerpilih.length > 0 && dataTerpilih[0].header) titleText = dataTerpilih[0].header;
     
-    judulNavbar.innerHTML = titleText;
-    judulNavbar.style.fontFamily = "'Amiri', serif";
+    if (judulNavbar) {
+        judulNavbar.innerHTML = titleText;
+        judulNavbar.style.fontFamily = "'Amiri', serif";
+    }
 
     if (dataTerpilih.length === 0) {
         container.innerHTML = `<div class="text-center mt-5"><h5 class="text-muted">Bab ini belum diinput.</h5></div>`;
@@ -50,39 +48,37 @@ function tampilkanNadhom() {
     }
 
     const listFav = getFavorit();
-    let html = '<div style="height: 12px;"></div>';
-
     const isHafalan = document.body.classList.contains('mode-hafalan-aktif');
+    let html = '<div style="height: 5px;"></div>';
 
     dataTerpilih.forEach(item => {
         const isFav = listFav.includes(item.id);
-        
-        // Ikon Bookmark (Aktif = Emas Solid, Mati = Abu Outline)
         const iconFav = isFav 
-            ? `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#ffc107" stroke="#ffc107" stroke-width="2" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>` 
-            : `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#9da5b1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>`;
+            ? `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#ffc107" stroke="#ffc107" stroke-width="2" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>` 
+            : `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="#9da5b1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>`;
 
-        // Class animasi jika aktif
-        const activeClass = isFav ? "bookmark-active" : "";
-
-        let badgeHtml = (item.id !== 0 && item.id % 5 === 0) ? `<span class="badge rounded-pill bg-success bg-opacity-10 text-success" style="font-size: 0.75rem;">#${item.id}</span>` : '<div></div>';
+        // [TASHIH LOGIKA] Hanya tampil jika ID > 0 DAN ID habis dibagi 5
+        let badgeHtml = (item.id > 0 && item.id % 5 === 0) 
+            ? `<span class="posisi-badge">#${item.id}</span>` 
+            : '';
 
         const teksAsli = item.arab;
         const teksSensor = generateCloze(item.arab);
         let teksTampil = isHafalan ? teksSensor : teksAsli;
 
         html += `
-        <div class="card nadhom-card border-0 shadow-sm mb-3" id="bait-${item.id}">
+        <div class="card nadhom-card border-0 shadow-sm mb-2" id="bait-${item.id}">
             <div class="card-body">
                 
-                <div class="d-flex justify-content-between align-items-start mb-1 px-1 header-bait">
-                    ${badgeHtml}
-                    <button class="btn btn-link p-0 no-outline bookmark-btn ${activeClass}" onclick="toggleFavorit(${item.id})">
+                ${badgeHtml}
+
+                <div class="posisi-bookmark">
+                    <button class="btn btn-link p-0 no-outline" onclick="toggleFavorit(${item.id})">
                          ${iconFav}
                     </button>
                 </div>
 
-                <div class="text-center my-2 arabic-box">
+                <div class="text-center arabic-box">
                     <p class="teks-arab mb-0" 
                        dir="rtl"
                        id="teks-${item.id}"
@@ -93,7 +89,7 @@ function tampilkanNadhom() {
                     <textarea id="data-sensor-${item.id}" style="display:none;">${teksSensor}</textarea>
                 </div>
 
-                <div class="mt-3 terjemah-container">
+                <div class="terjemah-container mt-2">
                     <p class="text-center terjemah-text mb-0">${item.terjemah}</p>
                 </div>
             </div>
@@ -103,7 +99,6 @@ function tampilkanNadhom() {
 
     container.innerHTML = html;
     
-    // Auto Scroll
     if (window.location.hash) {
         setTimeout(() => {
             const idTarget = window.location.hash.substring(1);
@@ -116,7 +111,6 @@ function tampilkanNadhom() {
         }, 500);
     }
 }
-
 
 // --- 3. LOGIKA SENSOR ---
 function generateCloze(teks) {
@@ -133,10 +127,10 @@ function potongTeks(kalimat, keepDepan, keepBelakang) {
     if (kata.length <= (keepDepan + keepBelakang)) return kalimat;
     let depan = ""; if (keepDepan > 0) depan = kata.slice(0, keepDepan).join(' ');
     let belakang = ""; if (keepBelakang > 0) belakang = kata.slice(kata.length - keepBelakang).join(' ');
-    if (keepDepan > 0 && keepBelakang > 0) return `${depan} ............ ${belakang}`;
-    else if (keepDepan > 0) return `${depan} ............`;
-    else if (keepBelakang > 0) return `............ ${belakang}`;
-    else return `............`;
+    if (keepDepan > 0 && keepBelakang > 0) return `${depan} ... ${belakang}`;
+    else if (keepDepan > 0) return `${depan} ...`;
+    else if (keepBelakang > 0) return `... ${belakang}`;
+    else return `...`;
 }
 
 function klikTeks(id) {
@@ -153,7 +147,6 @@ function klikTeks(id) {
         p.style.color = "";
     }
 }
-
 
 // --- 4. TOMBOL HAFALAN NAVBAR ---
 function setupTombolHafalan() {
@@ -175,13 +168,10 @@ function setupTombolHafalan() {
 
 function updateIkonHafalan(isActive) {
     if(!btnHafalan) return;
-    if (isActive) {
-        btnHafalan.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffc107" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>`;
-    } else {
-        btnHafalan.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>`;
-    }
+    btnHafalan.innerHTML = isActive 
+        ? `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffc107" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>`
+        : `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>`;
 }
-
 
 // --- 5. PENGATURAN ---
 function setupPengaturan(initialFont) {
@@ -228,8 +218,7 @@ function updateTerjemahUI(isShow) {
     }
 }
 
-
-// --- 6. CSS FINAL (PREMIUM QUALITY) ---
+// --- 6. CSS FINAL (CLEAN NO BACKGROUND) ---
 function updateGlobalStyle(size) {
     let styleEl = document.getElementById('dynamic-font-style');
     if (!styleEl) {
@@ -249,64 +238,48 @@ function updateGlobalStyle(size) {
             animation: bookmarkPop 0.3s ease-out;
         }
 
-        /* AppBar: Spacing lebih lega */
-        .app-navbar {
-            border-bottom: 1.5px solid #ffc107 !important;
-            padding-bottom: 6px !important; /* Tambah spacing dikit */
-        }
-        #judul-navbar {
-            font-size: 1.4rem !important; 
-            margin-top: -2px; 
+        /* NOMOR BAIT: Teks Emas Soft, Tanpa Kotak */
+        .posisi-badge { 
+            position: absolute; 
+            top: 5px; 
+            left: 10px; 
+            font-size: 0.8rem; 
+            font-weight: 700;
+            color: #d4af37; /* Emas */
+            opacity: 0.85;  /* Soft */
+            z-index: 5;
+            font-family: 'Segoe UI', sans-serif;
         }
 
-        /* Card: Border Opacity 75% */
-        .nadhom-card {
-            border-radius: 12px !important;
-            margin-bottom: 12px !important;
-            border-left: 4px solid rgba(255, 193, 7, 0.75) !important;
-            transition: transform 0.2s;
-        }
+        /* Bookmark Kanan */
+        .posisi-bookmark { position: absolute; top: 2px; right: 2px; z-index: 5; }
         
-        /* Spacing Card Body */
-        .card-body {
-            padding: 1.2rem !important;
-            padding-bottom: 1rem !important;
-        }
+        /* CARD COMPACT */
+        .nadhom-card { position: relative; border-radius: 12px !important; margin-bottom: 8px !important; border-left: 4px solid rgba(255, 193, 7, 0.75) !important; transition: transform 0.2s; }
+        .card-body { padding: 0.8rem 0.5rem 0.6rem 0.5rem !important; }
 
-        /* Arabic Text: Lock Max Width & Readability */
+        /* ARABIC TEXT */
         .teks-arab { 
             font-size: ${size}px !important; 
             line-height: 2.0 !important;
             cursor: pointer;
             transition: color 0.2s;
-            max-width: 90%; /* Biar gak terlalu lebar di Tablet */
-            margin: 0 auto; /* Center */
+            max-width: 95%; margin: 0 auto;
+            margin-top: 0.2rem;
         }
 
-        /* Terjemah: Perfect Contrast */
-        .terjemah-container {
-            background-color: rgba(25, 135, 84, 0.04);
-            border-radius: 8px;
-            padding: 10px 12px !important;
-            margin-top: 12px !important;
-        }
-        .terjemah-text {
-            font-family: 'Segoe UI', sans-serif;
-            font-weight: 500 !important;
-            color: #4F5B55 !important;
-            line-height: 1.45;
-            font-size: 0.9rem;
-        }
+        /* TERJEMAH */
+        .terjemah-container { background-color: rgba(25, 135, 84, 0.04); border-radius: 8px; padding: 8px 10px !important; margin-top: 8px !important; }
+        .terjemah-text { font-family: 'Segoe UI', sans-serif; font-weight: 500 !important; color: #4F5B55 !important; line-height: 1.4; font-size: 0.85rem; }
         
-        /* Dark Mode */
+        /* DARK MODE */
         body.dark-mode .terjemah-container { background-color: rgba(255, 255, 255, 0.05); }
-        body.dark-mode .terjemah-text { color: #d0d0d0 !important; font-weight: 400 !important; }
+        body.dark-mode .terjemah-text { color: #d0d0d0 !important; }
 
-        /* Mode Hafalan Center */
-        body.hide-terjemah .terjemah-text { display: none !important; }
-        body.hide-terjemah .terjemah-container { display: none !important; margin: 0 !important; padding: 0 !important;}
-        body.hide-terjemah .arabic-box { padding-top: 10px; padding-bottom: 20px; }
-        body.hide-terjemah .header-bait { margin-bottom: 0 !important; }
+        /* HIDE TERJEMAH */
+        body.hide-terjemah .terjemah-text, body.hide-terjemah .terjemah-container { display: none !important; margin: 0 !important; padding: 0 !important; height: 0; }
+        body.hide-terjemah .arabic-box { margin-bottom: 0 !important; padding-bottom: 0 !important; }
+        body.hide-terjemah .card-body { padding-bottom: 0.8rem !important; }
 
         /* Utility */
         button:focus, a:focus, .btn:focus { outline: none !important; box-shadow: none !important; }
