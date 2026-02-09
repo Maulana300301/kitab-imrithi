@@ -3,170 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <script>
-        (function() {
-            // Cek Tema
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
-                document.documentElement.classList.add('dark-mode');
-            }
-            // Cek Ukuran Font (Agar kontainer lgsg siap ukurannya)
-            const savedFont = localStorage.getItem('ukuranFont');
-            if (savedFont) {
-                document.documentElement.style.setProperty('--user-font-size', savedFont + 'px');
-            }
-        })();
-    </script>
+    <meta name="theme-color" content="#0f3d2e">
 
-    <title>Baca Kitab - Imrithi Digital</title>
-    <link rel="stylesheet" href="assets/css/bootstrap@5.2.0.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+<script>
+(function() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+        document.documentElement.style.backgroundColor = '#121212';
+    }
 
-    <style>
-        /* 2. STYLE INLINE (Mencegah Kilatan Putih Instan) */
-        html.dark-mode { background-color: #121212 !important; }
-        html.dark-mode body { background-color: #121212 !important; opacity: 0; }
-        
-        /* Pastikan transisi hanya jalan setelah load selesai */
-        body { opacity: 1; transition: opacity 0.2s ease; }
-        
-        /* CSS Variabel untuk Font Size Dynamic */
-        :root { --user-font-size: 26px; }
-        .teks-arab { font-size: var(--user-font-size) !important; }
+    let savedFont = localStorage.getItem('ukuranFont') || 26;
+    if (savedFont < 16) savedFont = 16;
+    document.documentElement.style.setProperty('--user-font-size', savedFont + 'px');
+})();
+</script>
 
-        /* Style Navbar agar Center */
-        .app-navbar { background-color: var(--warna-utama); }
-        .nav-icon-btn { color: white; border: none; background: none; padding: 5px; }
-    </style>
+<title>Baca Kitab - Imrithi Digital</title>
+<link rel="stylesheet" href="assets/css/bootstrap@5.2.0.min.css">
+<link rel="stylesheet" href="assets/css/style.css">
+
+<style>
+/* ================= TEMA ================= */
+:root {
+    --user-font-size: 26px;
+    --warna-utama: #0f3d2e;
+    --warna-aksen: #ffc107;
+}
+
+/* ================= DARK MODE ================= */
+html.dark-mode { background-color: #121212 !important; }
+
+body {
+    transition: background-color 0.3s ease, color 0.3s ease;
+    min-height: 100vh;
+}
+
+html.dark-mode body {
+    background-color: #121212 !important;
+    color: #e0e0e0;
+}
+
+/* ================= NAVBAR ================= */
+.app-navbar {
+    background-color: var(--warna-utama) !important;
+    border-bottom: 2px solid var(--warna-aksen);
+}
+.nav-icon-btn { color: white; border: none; background: none; padding: 5px; }
+#judul-navbar { color: white !important; font-family: 'Amiri', serif; }
+
+/* =====================================================
+   ============ KARTU NADHOM (COMPACT) ==================
+   ===================================================== */
+
+.nadhom-card {
+    border-radius: 10px !important;
+    border-left: 4px solid var(--warna-aksen) !important;
+    position: relative;
+    margin-bottom: 0.7rem;
+    transition: background-color 0.2s ease;
+}
+
+/* Padding dasar kartu */
+.card-body {
+    padding: 0.7rem 0.85rem 0.65rem 0.85rem !important;
+    position: relative;
+}
+
+/* Nomor & Bookmark */
+.posisi-badge {
+    position: absolute;
+    top: 6px;
+    left: 8px;
+    font-size: 0.65rem;
+    z-index: 5;
+}
+.posisi-bookmark {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    z-index: 5;
+}
+
+/* ================= TEKS ARAB ================= */
+.teks-arab {
+    font-size: var(--user-font-size) !important;
+    line-height: 2.0 !important;
+    cursor: pointer;
+    margin-top: 0.15rem;
+}
+
+/* ================= TERJEMAH ================= */
+.terjemah-box {
+    margin-top: 0.55rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    font-size: 0.9rem;
+}
+
+/* ====== MODE TANPA TERJEMAH (SUPER COMPACT) ====== */
+.nadhom-card:not(:has(.terjemah-box)) .card-body {
+    padding-bottom: 0.5rem !important;
+}
+
+.nadhom-card:not(:has(.terjemah-box)) .teks-arab {
+    margin-bottom: 0 !important;
+}
+
+/* ================= DARK MODE CARD ================= */
+body.dark-mode .nadhom-card {
+    background-color: #1e1e1e !important;
+    color: #ffffff;
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+}
+
+body.dark-mode .terjemah-box {
+    border-top: 1px solid rgba(255,255,255,0.12);
+}
+
+/* ================= MISC ================= */
+* { -webkit-tap-highlight-color: transparent; }
+
+.badge.bg-success {
+    background-color: var(--warna-utama) !important;
+    opacity: 0.9;
+}
+</style>
 </head>
+
 <body class="bg-light">
 
-    <nav class="navbar sticky-top app-navbar shadow-sm">
-        <div class="container-fluid position-relative d-flex justify-content-center align-items-center" style="min-height: 55px;">
-            
-            <a class="nav-icon-btn position-absolute start-0 ms-2" href="daftar_isi.html">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-            </a>
+<nav class="navbar sticky-top app-navbar shadow-sm">
+    <div class="container-fluid position-relative d-flex justify-content-center align-items-center" style="min-height: 55px;">
+        <a class="nav-icon-btn position-absolute start-0 ms-2" href="daftar_isi.html">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+        </a>
 
-            <span id="judul-navbar" class="fw-bold text-white fs-5">Imrithi</span>
+        <span id="judul-navbar" class="fw-bold fs-5">Imrithi</span>
 
-            <div class="d-flex align-items-center gap-2 position-absolute end-0 me-2">
-                <button class="nav-icon-btn" id="btn-hafalan" title="Mode Hafalan">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                </button>
+        <div class="d-flex align-items-center gap-2 position-absolute end-0 me-2">
+            <button class="nav-icon-btn" id="btn-hafalan" title="Mode Hafalan">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+            </button>
 
-                <button class="nav-icon-btn" data-bs-toggle="modal" data-bs-target="#settingsModal">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
-                </button>
+            <button class="nav-icon-btn" data-bs-toggle="modal" data-bs-target="#settingsModal">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="5" r="1"></circle>
+                    <circle cx="12" cy="12" r="1"></circle>
+                    <circle cx="12" cy="19" r="1"></circle>
+                </svg>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="container py-3 mb-5" id="list-container"></div>
+
+<div class="modal fade" id="settingsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow">
+            <div class="modal-header border-bottom-0 pb-0">
+                <h5 class="modal-title fw-bold">Pengaturan Tampilan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
-        </div>
-    </nav>
-
-    <div class="container py-3 mb-5" id="list-container">
-        </div>
-
-    <div class="modal fade" id="settingsModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content rounded-4 border-0 shadow">
-                <div class="modal-header border-bottom-0 pb-0">
-                    <h5 class="modal-title fw-bold">Pengaturan Tampilan</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body pt-4">
-                    
-                    <div class="mb-4">
-                        <label class="form-label d-flex justify-content-between">
-                            <span class="fw-bold text-secondary">Ukuran Huruf Arab</span>
-                            <span class="badge bg-success" id="font-val-display">26px</span>
-                        </label>
-                        <div class="d-flex align-items-center gap-3">
-                            <small>A-</small>
-                            <input type="range" class="form-range" min="18" max="45" step="1" id="fontRange">
-                            <large>A+</large>
-                        </div>
+            <div class="modal-body pt-4">
+                <div class="mb-4">
+                    <label class="form-label d-flex justify-content-between">
+                        <span class="fw-bold text-secondary">Ukuran Huruf Arab</span>
+                        <span class="badge bg-success" id="font-val-display">26px</span>
+                    </label>
+                    <div class="d-flex align-items-center gap-3">
+                        <small>A-</small>
+                        <input type="range" class="form-range" min="16" max="45" step="1" id="fontRange" value="26">
+                        <large>A+</large>
                     </div>
-
-                    <hr class="text-muted">
-
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <div>
-                            <span class="fw-bold d-block text-dark">Mode Gelap</span>
-                            <small class="text-muted">Nyaman untuk mata di malam hari</small>
-                        </div>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="themeSwitch" style="width: 2.8em; height: 1.4em;">
-                        </div>
-                    </div>
-
-                    <hr class="text-muted">
-
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <div>
-                            <span class="fw-bold d-block text-dark">Tampilkan Arti</span>
-                            <small class="text-muted">Sembunyikan untuk fokus menghafal</small>
-                        </div>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="terjemahSwitch" checked style="width: 2.8em; height: 1.4em;">
-                        </div>
-                    </div>
-
                 </div>
-                <div class="modal-footer border-top-0">
-                    <button type="button" class="btn btn-success w-100 rounded-pill py-2 fw-bold" data-bs-dismiss="modal">Simpan & Selesai</button>
+
+                <hr class="text-muted">
+
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                        <span class="fw-bold d-block text-dark">Mode Gelap</span>
+                        <small class="text-muted">Nyaman untuk mata di malam hari</small>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="themeSwitch" style="width: 2.8em; height: 1.4em;">
+                    </div>
                 </div>
+
+                <hr class="text-muted">
+
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                        <span class="fw-bold d-block text-dark">Tampilkan Arti</span>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="terjemahSwitch" checked style="width: 2.8em; height: 1.4em;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer border-top-0">
+                <button type="button" class="btn btn-success w-100 rounded-pill py-2 fw-bold" data-bs-dismiss="modal">
+                    Simpan & Selesai
+                </button>
             </div>
         </div>
     </div>
+</div>
 
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/data_nadhom.js"></script>
-    <script src="assets/js/app.js"></script>
-
- <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // 1. Matikan transisi saat loading awal
-        document.body.style.transition = 'none';
-        
-        const savedTheme = localStorage.getItem('theme');
-        const themeSwitch = document.getElementById('themeSwitch');
-
-        // 2. Sinkronisasi Awal (HTML & BODY)
-        if (savedTheme === 'dark') {
-            document.documentElement.classList.add('dark-mode');
-            document.body.classList.add('dark-mode');
-            if(themeSwitch) themeSwitch.checked = true;
-        } else {
-            document.documentElement.classList.remove('dark-mode');
-            document.body.classList.remove('dark-mode');
-            if(themeSwitch) themeSwitch.checked = false;
-        }
-        
-        document.body.style.opacity = '1';
-
-        // 3. Hidupkan kembali transisi
-        setTimeout(() => {
-            document.body.style.transition = 'background-color 0.3s ease, opacity 0.3s ease';
-        }, 100);
-
-        // 4. Logika Toggle di Modal (PENTING)
-        if(themeSwitch) {
-            themeSwitch.addEventListener('change', function() {
-                if (this.checked) {
-                    document.documentElement.classList.add('dark-mode');
-                    document.body.classList.add('dark-mode');
-                    localStorage.setItem('theme', 'dark');
-                } else {
-                    document.documentElement.classList.remove('dark-mode');
-                    document.body.classList.remove('dark-mode');
-                    localStorage.setItem('theme', 'light');
-                }
-            });
-        }
-    });
-</script>
-
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/data_nadhom.js"></script>
+<script src="assets/js/app.js"></script>
 
 </body>
 </html>
