@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f3d2e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="icon" type="image/png" href="assets/img/icon.png">
+    <link rel="apple-touch-icon" href="assets/img/icon.png">
+
     <script>
         (function() {
             const savedTheme = localStorage.getItem('theme');
@@ -16,16 +23,13 @@
     <title>Daftar Isi - Imrithi Digital</title>
     <link rel="stylesheet" href="assets/css/bootstrap@5.2.0.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="icon" type="image/png" href="assets/img/icon.png">
-    <link rel="apple-touch-icon" href="assets/img/icon.png">
 
     <style>
-        /* --- TEMA WARNA (SINKRON DENGAN HOME) --- */
+        /* --- TEMA WARNA --- */
         :root {
-            --primary: #0f3d2e;        /* Hijau NU Gelap */
+            --primary: #0f3d2e;
             --primary-dark: #08281e;
             --gold: #d4af37;
-            --gold-light: #f9f1d8;
             --bg-light: #f8f9fa;
             --text-dark: #2c3e50;
         }
@@ -33,78 +37,85 @@
         body { 
             background-color: var(--bg-light); 
             font-family: 'Segoe UI', sans-serif;
-            padding-bottom: 60px;
-            scroll-behavior: smooth;
+            padding-bottom: 50px;
         }
 
-        /* HEADER SECTION */
+        /* HEADER */
         .app-navbar {
             background-color: var(--primary);
             border-bottom: 2px solid var(--gold) !important;
-            padding-bottom: 55px; 
-            border-bottom-left-radius: 30px;
-            border-bottom-right-radius: 30px; 
-            box-shadow: 0 4px 20px rgba(15, 61, 46, 0.3);
+            padding-bottom: 45px;
+            border-bottom-left-radius: 25px;
+            border-bottom-right-radius: 25px; 
+            box-shadow: 0 4px 15px rgba(15, 61, 46, 0.3);
             position: relative; 
             z-index: 5;
         }
 
-        /* STATISTIK BOX - Font Dikecilkan */
-        .stats-container { margin-top: -45px; padding: 0 20px; position: relative; z-index: 10; }
+        /* STATISTIK BOX */
+        .stats-container { margin-top: -35px; padding: 0 20px; position: relative; z-index: 10; }
         .stats-card {
-            background: white; border-radius: 16px; border: none;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08); padding: 20px 15px; /* Padding dikurangi sedikit */
+            background: white; border-radius: 12px; border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
+            padding: 12px 10px;
             display: flex; justify-content: space-around; text-align: center;
         }
         .stat-item h3 { 
-            font-size: 1.5rem; /* Dikecilkan dari 1.8rem */
+            font-size: 1.2rem !important; 
             font-weight: 800; color: var(--primary); margin: 0; line-height: 1; 
         }
         .stat-item span { 
-            font-size: 0.6rem; /* Dikecilkan dari 0.65rem */
-            color: #999; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-top: 5px; display: block; 
+            font-size: 0.6rem !important; 
+            color: #999; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-top: 3px; display: block; 
         }
-        .stat-divider { width: 1px; background: linear-gradient(to bottom, transparent, rgba(212, 175, 55, 0.4), transparent); height: 40px; }
+        .stat-divider { width: 1px; background: linear-gradient(to bottom, transparent, rgba(212, 175, 55, 0.4), transparent); height: 30px; }
         
-        /* LIST ITEM - Font & Ukuran Dikecilkan */
-        .bab-list { margin-top: 25px; }
+        /* LIST ITEM */
+        .bab-list { margin-top: 20px; }
         .bab-item {
-            display: flex; align-items: center; background: white; border-radius: 12px; /* Radius sedikit dikecilkan */
-            padding: 14px; /* Padding dikurangi dari 18px */
-            margin-bottom: 10px; /* Margin dikurangi dari 12px */
+            display: flex; align-items: center; background: white; 
+            border-radius: 10px;
+            padding: 10px 12px;
+            margin-bottom: 8px;
             text-decoration: none; color: var(--text-dark);
-            box-shadow: 0 3px 8px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.02);
-            transition: all 0.3s ease; position: relative; overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.02);
+            transition: all 0.2s ease; position: relative; overflow: hidden;
         }
         .bab-item:active { transform: scale(0.98); background-color: #f1f8f5; }
         
+        /* NOMOR URUT */
         .bab-number {
             font-family: 'Segoe UI', sans-serif; font-weight: 700; 
-            font-size: 0.85rem; /* Dikecilkan dari 0.95rem */
+            font-size: 0.75rem !important;
             color: #bfa15f; background: rgba(212, 175, 55, 0.1); 
-            width: 36px; height: 36px; /* Dimensi dikecilkan dari 42px */
-            border-radius: 10px; display: flex; align-items: center; justify-content: center;
-            margin-right: 14px; flex-shrink: 0;
+            width: 30px; height: 30px;
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            margin-right: 12px; flex-shrink: 0;
         }
+
         .bab-info { flex-grow: 1; }
+        
+        /* JUDUL ARAB */
         .bab-title { 
             font-family: 'Amiri', serif !important; font-weight: 700; 
-            font-size: 1.15rem; /* Dikecilkan dari 1.35rem */
-            color: #222; margin-bottom: 2px; 
+            font-size: 1.0rem !important;
+            color: #222; margin-bottom: 0px; line-height: 1.3;
         }
+        
+        /* DESKRIPSI */
         .bab-desc { 
-            font-size: 0.7rem; /* Dikecilkan dari 0.8rem */
+            font-size: 0.65rem !important;
             color: #777; font-weight: 500; 
         }
         
         .special-badge { 
-            font-size: 0.5rem; /* Dikecilkan dari 0.55rem */
-            background: var(--primary); color: white; padding: 2px 6px; border-radius: 20px; 
-            text-transform: uppercase; letter-spacing: 1px; font-weight: 800; display: inline-block; margin-bottom: 4px; 
+            font-size: 0.5rem; 
+            background: var(--primary); color: white; padding: 1px 5px; border-radius: 20px; 
+            text-transform: uppercase; letter-spacing: 0.5px; font-weight: 800; display: inline-block; margin-bottom: 2px; 
         }
         .bab-last-read { border-left: 3px solid var(--gold) !important; background: #fffdf2; }
 
-        /* DARK MODE SUPPORT */
+        /* DARK MODE */
         body.dark-mode { background-color: #121212; --bg-light: #121212; --text-dark: #ddd; }
         body.dark-mode .app-navbar { background-color: var(--primary-dark); }
         body.dark-mode .stats-card, body.dark-mode .bab-item { background-color: #1e1e1e; border-color: #333; }
@@ -119,9 +130,9 @@
     <nav class="app-navbar sticky-top">
         <div class="container-fluid position-relative d-flex align-items-center justify-content-center py-2">
             <a href="index.html" class="text-white p-2 position-absolute start-0 ms-2" style="z-index: 10;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
             </a>
-            <span class="text-white fw-bold fs-5">Daftar Isi</span>
+            <span class="text-white fw-bold" style="font-size: 1.1rem;">Daftar Isi</span>
             <div id="theme-btn" class="theme-toggle p-2 position-absolute end-0 me-2" style="cursor: pointer; color: white;"></div>
         </div>
     </nav>
@@ -141,91 +152,101 @@
     </div>
 
     <div class="container bab-list pb-4" id="bab-container">
-        <div class="text-center py-5 text-muted">Memuat Kitab...</div>
+        <div class="text-center py-5 text-muted small">Memuat...</div>
     </div>
 
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/data_nadhom.js"></script>
 
-<script>
-    const themeBtn = document.getElementById('theme-btn');
+    <script>
+        const themeBtn = document.getElementById('theme-btn');
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            document.documentElement.classList.add('dark-mode');
-            document.body.classList.add('dark-mode');
-        }
-        
-        updateThemeIcon();
-        generateSmartList();
-    });
-
-    themeBtn.addEventListener('click', () => {
-        const isDarkNow = document.documentElement.classList.toggle('dark-mode');
-        document.body.classList.toggle('dark-mode', isDarkNow);
-        localStorage.setItem('theme', isDarkNow ? 'dark' : 'light');
-        updateThemeIcon();
-    });
-
-    function updateThemeIcon() {
-        const isDark = document.documentElement.classList.contains('dark-mode');
-        themeBtn.innerHTML = isDark 
-            ? `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`
-            : `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
-    }
-
-    function generateSmartList() {
-        const container = document.getElementById('bab-container');
-        const totalBabEl = document.getElementById('total-bab');
-        const totalBaitEl = document.getElementById('total-bait');
-        
-        let babList = [];
-        let currentBab = null;
-
-        dataNadhom.forEach((item, index) => {
-            let rawHeader = item.header;
-            if (!rawHeader && item.id <= 19) rawHeader = "مُقَدِّمَة";
-            
-            if (rawHeader && rawHeader !== (currentBab ? currentBab.title : "")) {
-                if (currentBab) babList.push(currentBab);
-                currentBab = { title: rawHeader, start: item.id, end: item.id, count: 1 };
-            } else {
-                if (currentBab) { 
-                    currentBab.end = item.id; 
-                    currentBab.count++; 
-                }
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark-mode');
+                document.body.classList.add('dark-mode');
             }
-            if (index === dataNadhom.length - 1 && currentBab) babList.push(currentBab);
+            
+            updateThemeIcon();
+            generateSmartList();
         });
 
-        totalBabEl.innerText = babList.length;
-        totalBaitEl.innerText = dataNadhom.length;
-
-        let lastReadIndex = parseInt(localStorage.getItem('lastReadBabIndex'));
-        let html = '';
-        
-        babList.forEach((bab, index) => {
-            let nomor = index + 1;
-            let isActive = (index === lastReadIndex);
-            let isMuqaddimah = (index === 0);
-            let itemClass = isActive ? 'bab-last-read' : '';
-            
-            let nomorHtml = `<div class="bab-number">${pad(nomor)}</div>`;
-            if(isMuqaddimah) nomorHtml = `<div class="bab-number">۞</div>`;
-            
-            let subDesc = `Mulai Bait ${bab.start}`;
-            let badgeHtml = isMuqaddimah ? `<div class="special-badge">Muqoddimah</div>` : "";
-
-            html += `<a href="baca.html?mulai=${bab.start}&akhir=${bab.end}" onclick="saveLastRead(${index})" class="bab-item ${itemClass}">
-                ${nomorHtml}<div class="bab-info">${badgeHtml}<div class="bab-title">${bab.title}</div><div class="bab-desc">${subDesc} • ${bab.count} Bait</div></div>
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg></a>`;
+        themeBtn.addEventListener('click', () => {
+            const isDarkNow = document.documentElement.classList.toggle('dark-mode');
+            document.body.classList.toggle('dark-mode', isDarkNow);
+            localStorage.setItem('theme', isDarkNow ? 'dark' : 'light');
+            updateThemeIcon();
         });
-        container.innerHTML = html;
+
+        function updateThemeIcon() {
+            const isDark = document.documentElement.classList.contains('dark-mode');
+            themeBtn.innerHTML = isDark 
+                ? `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`
+                : `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+        }
+
+        function generateSmartList() {
+            const container = document.getElementById('bab-container');
+            const totalBabEl = document.getElementById('total-bab');
+            const totalBaitEl = document.getElementById('total-bait');
+            
+            let babList = [];
+            let currentBab = null;
+
+            dataNadhom.forEach((item, index) => {
+                let rawHeader = item.header;
+                if (!rawHeader && item.id <= 19) rawHeader = "مُقَدِّمَة";
+                
+                if (rawHeader && rawHeader !== (currentBab ? currentBab.title : "")) {
+                    if (currentBab) babList.push(currentBab);
+                    currentBab = { title: rawHeader, start: item.id, end: item.id, count: 1 };
+                } else {
+                    if (currentBab) { 
+                        currentBab.end = item.id; 
+                        currentBab.count++; 
+                    }
+                }
+                if (index === dataNadhom.length - 1 && currentBab) babList.push(currentBab);
+            });
+
+            totalBabEl.innerText = babList.length;
+            totalBaitEl.innerText = dataNadhom.length;
+
+            let lastReadIndex = parseInt(localStorage.getItem('lastReadBabIndex'));
+            let html = '';
+            
+            babList.forEach((bab, index) => {
+                let nomor = index + 1;
+                let isActive = (index === lastReadIndex);
+                let isMuqaddimah = (index === 0);
+                let itemClass = isActive ? 'bab-last-read' : '';
+                
+                let nomorHtml = `<div class="bab-number">${pad(nomor)}</div>`;
+                if(isMuqaddimah) nomorHtml = `<div class="bab-number">۞</div>`;
+                
+                let subDesc = `Bait ${bab.start} • ${bab.count} Baris`;
+                let badgeHtml = isMuqaddimah ? `<div class="special-badge">Muqoddimah</div>` : "";
+
+                html += `<a href="baca.html?mulai=${bab.start}&akhir=${bab.end}" onclick="saveLastRead(${index})" class="bab-item ${itemClass}">
+                    ${nomorHtml}<div class="bab-info">${badgeHtml}<div class="bab-title">${bab.title}</div><div class="bab-desc">${subDesc}</div></div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg></a>`;
+            });
+            container.innerHTML = html;
+        }
+        function saveLastRead(index) { localStorage.setItem('lastReadBabIndex', index); }
+        function pad(d) { return (d < 10) ? '0' + d.toString() : d.toString(); }
+    </script>
+
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js')
+                .then(reg => console.log('SW Success'))
+                .catch(err => console.log('SW Fail'));
+        });
     }
-    function saveLastRead(index) { localStorage.setItem('lastReadBabIndex', index); }
-    function pad(d) { return (d < 10) ? '0' + d.toString() : d.toString(); }
-</script>
+    </script>
 
 </body>
 </html>
